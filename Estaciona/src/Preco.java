@@ -1,3 +1,4 @@
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -28,20 +29,20 @@ public class Preco {
 		bott.setLocation(150,150);
 		
 		text1.setLocation(1,50);
-		text2.setLocation(1,100);
+		text2.setLocation(1,80);
 		text3.setLocation(150,20);
 		
 		text1.setSize(150, 40);
-		text2.setSize(150, 40);
+		text2.setSize(400, 150);
 		text3.setSize(100, 40);
 		
 		bott.setSize(100, 40);
 	    
 	    //JLabel precoAnterior = new JLabel("Preço anterior: R$ "+anterior);
-	    JLabel precototal = new JLabel("Preço atual: R$ "+tot);
+	    JLabel precototal = new JLabel("Preço total: R$ "+tot);
 	    JLabel dados = new JLabel("A pagar");
 	    
-	   // text1.add(precoAnterior);
+	    precototal.setFont(new Font("Dialog", Font.PLAIN, 15));
 		text2.add(precototal);
 		text3.add(dados);
 		bott.add(botao);
