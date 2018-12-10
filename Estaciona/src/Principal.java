@@ -1,24 +1,37 @@
-import java.util.Scanner;
-import javax.swing.JFrame;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
-public class Principal {
+public class Principal implements Serializable{
 
+	private static ObjectOutputStream output;
+	
 	public static void main (String args[])
 	{
-		Scanner scanner = new Scanner(System.in); 
-		Veiculo veiculos[] = new Veiculo[200];
-		int i;
-		
+
+		Control controle;
+		controle = Control.getControl();
+		controle.criaLista();
 		TelaPrincipal telaVagas = new TelaPrincipal();
+			
 		
-		for(i=0;i<200;i++)
-		{
-			veiculos[i] = new Veiculo();
+		telaVagas.plantaBaixa(controle);		
+	}
+	
+	public static void escrever(Control controle)
+	{
+
+		try {
+			output = new ObjectOutputStream (new FileOutputStream("historico.ser"));
+			output.writeObject(controle);
 		}
 		
-		telaVagas.plantaBaixa(veiculos);
-		
-		int totalCarros, totalMotos, totalCaminhonetes, sair;
-		
+		catch(IOException e){
+			
+		}
 	}
+	
+	
 }
+

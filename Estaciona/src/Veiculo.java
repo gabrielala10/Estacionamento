@@ -18,8 +18,7 @@ public class Veiculo implements Serializable{
 
 	private int concluido;
 	private String placa;
-	private int tipo;
-	private int vaga;
+	private double preco;
 	private double valorTotal;
 	
 	public Veiculo()
@@ -27,28 +26,41 @@ public class Veiculo implements Serializable{
 		concluido = 1;
 	}
 	
-	public void Estaciona(String placa, int tipo, int diaEntrada, int mesEntrada, int horaEntrada, int minutoEntrada, int segundoEntrada, int anoEntrada, int vaga)
+	public Veiculo(Veiculo veic)
+	{
+		placa = veic.getPlaca();
+		anoEntrada = veic.getAno();
+		mesEntrada = veic.getMes();
+		diaEntrada = veic.getDia();
+		horaEntrada = veic.getHora();
+		minutoEntrada = veic.getMinuto();
+		segundoEntrada = veic.getSegundo();
+		anoSaida = veic.getAnoSaida();
+		mesSaida = veic.getMesSaida();
+		diaSaida = veic.getDiaSaida();
+		horaSaida = veic.getHoraSaida();
+		minutoSaida = veic.getMinutoSaida();
+		segundoSaida = veic.getSegundoSaida();
+		concluido = 1;
+		preco = veic.getPreco();
+		valorTotal = veic.getValorTotal();	
+	}
+	
+	public void estaciona(String placa, int diaEntrada, int mesEntrada, int horaEntrada, int minutoEntrada, int segundoEntrada, int anoEntrada)
 	{
 		this.placa = placa;
-		this.tipo = tipo;
 		this.anoEntrada = anoEntrada;
 		this.mesEntrada = mesEntrada;
 		this.diaEntrada = diaEntrada;
 		this.horaEntrada = horaEntrada;
 		this.minutoEntrada = minutoEntrada;
 		this.segundoEntrada = segundoEntrada;
-		this.vaga = vaga;
 		concluido = 0;
 	}
 	
 	public String getPlaca()
 	{
 	 return placa;
-	}
-	
-	public int getVaga()
-	{
-		return vaga;
 	}
 	
 	public int getDia()
@@ -116,17 +128,23 @@ public class Veiculo implements Serializable{
 	 return valorTotal;
 	}
 	
-	public int getTipo()
-	{
-	 return tipo;
-	}
 	
 	public int getConcluido()
 	{
 	 return concluido;
 	}
 	
-	public double retirarVeiculo(int diaSaida, int mesSaida, int horaSaida, int segundoSaida, int anoSaida, int minutoSaida, double valor)
+	public double getPreco()
+	{
+	 return preco;
+	}
+	
+	public void setPreco(double preco)
+	{
+	 this.preco = preco;
+	}
+	
+	public void retirarVeiculo(int diaSaida, int mesSaida, int horaSaida, int segundoSaida, int anoSaida, int minutoSaida)
 	{
 		int meses, dias = 0, minutos, segundos, anos = 0;
 		double horas;
@@ -158,13 +176,12 @@ public class Veiculo implements Serializable{
 		minutos = minutoSaida - minutoEntrada;
 		segundos = segundoSaida - segundoEntrada;
 		
-		segundos = segundos + minutos * 60 + (int)horas * 360 + dias*24*360 + meses*31*24*360 + anos*365*24*360;
+		segundos = segundos + minutos * 60 + (int)horas * 3600 + dias*24*3600 + meses*31*24*3600 + anos*31*12*24*3600;
 		
-		horas = segundos / 360;
+		horas = (double)segundos / 3600;
 		concluido = 1;
 		
-		valorTotal = valor * horas;
-		
-		return valor*horas;	
+		valorTotal = horas * preco;		
 	}
+	
 }

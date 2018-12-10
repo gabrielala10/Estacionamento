@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -12,28 +13,27 @@ import javax.swing.SwingConstants;
 
 public class TelaPrincipal {
 	
-	JFrame janela;
-	JPanel panel = new JPanel(null);
+	private JFrame janela;
+	private JPanel panel = new JPanel(null);
 	
-	  public void plantaBaixa(Veiculo veiculos[])
+	  public void plantaBaixa(Control controle)
 	  {
 		  janela = new JFrame("Estacionamento");
-		  Color cor = new Color(255, 255, 224);
 		  janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		  panel = new JPanel();
 		  panel.setSize(1000, 1000);
-		  quadrado(veiculos);
+		  quadrado(controle.getArrayList());
 		  textos();
 		  //panel.setBackground(cor);
 		  janela.add(panel);
-		  criaMenu();
+		  criaMenu(controle);
 		    
 		  janela.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		  janela.setVisible(true);
 	  }
 	  
-	  private void quadrado(Veiculo veiculos[])
+	  private void quadrado(ArrayList<Veiculo> veiculos)
 	  {
 		  int x = 90, y = 50, i, j, k;
 		  JPanel quad;
@@ -49,7 +49,7 @@ public class TelaPrincipal {
 				  if(i<10)
 				  {
 					  text = new JLabel(""+ j+i);
-					  if(veiculos[j*10+i].getConcluido()==1)
+					  if(veiculos.get(j*10+i).getConcluido()==1)
 						  quad.setBackground( corVago );
 					  else
 						  quad.setBackground( corOcupado );
@@ -60,7 +60,7 @@ public class TelaPrincipal {
 				  {
 					  k = i-10;
 					  text = new JLabel(""+ 1+j+k);
-					  if(veiculos[j*10+i+90].getConcluido()==1)
+					  if(veiculos.get(j*10+i+90).getConcluido()==1)
 						  quad.setBackground( corVago );
 					  else
 						  quad.setBackground( corOcupado );
@@ -91,7 +91,7 @@ public class TelaPrincipal {
 		  JPanel text5 = new JPanel(null);
 		  JPanel text6 = new JPanel(null);
 		  JLabel terreo, piso1, motos, carros, carros2, caminhonetes;
-		  terreo = new JLabel("Térreo");
+		  terreo = new JLabel("TÃ©rreo");
 		  piso1 = new JLabel("Piso 1");
 		  motos = new JLabel("Motos");
 		  caminhonetes = new JLabel("Caminhonetes");
@@ -145,13 +145,15 @@ public class TelaPrincipal {
 		  janela.add(text6);
 	  }
 	  
-	  private void criaMenu()
+	  private void criaMenu(Control controle)
 	  {
 		  JMenuBar bar = new JMenuBar();
-		  JMenu menu = new JMenu("Inicio");
+		  JMenu menu = new JMenu("InÃ­cio");
 		  JMenu configurar = new JMenu("Configurar");
 		  
 		  TelaEstacionar estacionar = new TelaEstacionar();
+		  Historico historia = new Historico();
+		  EditarValores editar = new EditarValores();
 		
 		  JMenuItem inserirVeiculo = new JMenuItem("Inserir Veiculo");
 		  menu.add(inserirVeiculo);
@@ -159,7 +161,7 @@ public class TelaPrincipal {
 		  JMenuItem retirarVeiculo = new JMenuItem("Retirar Veiculo");
 		  menu.add(retirarVeiculo);
 		
-		  JMenuItem historico = new JMenuItem("Histórico");
+		  JMenuItem historico = new JMenuItem("HistÃ³rico");
 		  menu.add(historico);
 		    
 		  JMenuItem sair = new JMenuItem("Sair");
@@ -168,26 +170,46 @@ public class TelaPrincipal {
 		  JMenuItem mudarValor = new JMenuItem("Configurar Valores");
 		  configurar.add(mudarValor);
 		
-		  JMenuItem limparHistorico = new JMenuItem("Limpar Histórico");
-		  configurar.add(limparHistorico);
+		  /*JMenuItem limparHistorico = new JMenuItem("Limpar HistÃ³rico");
+		  configurar.add(limparHistorico);*/
 		
 		  sair.addActionListener(new ActionListener() {
 			  public void actionPerformed(ActionEvent e) {
 				  janela.dispose();
 			  }
 		  });
+		  
+		  historico.addActionListener(new ActionListener() {
+			  public void actionPerformed(ActionEvent e) {
+				  historia.exibir(controle);
+			  }
+		  });
 		
 		  retirarVeiculo.addActionListener(new ActionListener() {
 			  public void actionPerformed(ActionEvent e) {   		
-				  estacionar.retirar();
+				  estacionar.retirar(controle);
+				  janela.dispose();
 			  }
 		  });
 		    
 		  inserirVeiculo.addActionListener(new ActionListener() {
 			  public void actionPerformed(ActionEvent e) {
-				  estacionar.estaciona();
+				  estacionar.estaciona(controle);
+				  janela.dispose();
 			  }
 		  });
+		  
+		  mudarValor.addActionListener(new ActionListener() {
+			  public void actionPerformed(ActionEvent e) {
+				  editar.editar(controle);
+			  }
+		  });
+		  
+		  /*limparHistorico.addActionListener(new ActionListener() {
+			  public void actionPerformed(ActionEvent e) {
+				  controle.limpar();
+			  }
+		  });*/
 		
 		
 		  bar.add(menu);
