@@ -144,7 +144,7 @@ public class Veiculo implements Serializable{
 	 this.preco = preco;
 	}
 	
-	public void retirarVeiculo(int diaSaida, int mesSaida, int horaSaida, int segundoSaida, int anoSaida, int minutoSaida)
+	public int retirarVeiculo(int diaSaida, int mesSaida, int horaSaida, int segundoSaida, int anoSaida, int minutoSaida, int i)
 	{
 		int meses, dias = 0, minutos, segundos, anos = 0;
 		double horas;
@@ -181,7 +181,12 @@ public class Veiculo implements Serializable{
 		horas = (double)segundos / 3600;
 		concluido = 1;
 		
-		valorTotal = horas * preco;		
+		valorTotal = horas * preco;	
+		if(horas>0)
+			return i;
+		else
+			concluido = 0;
+			return -2;
 	}
 	
 }

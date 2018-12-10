@@ -178,32 +178,53 @@ public class Control implements Serializable{
 	}
 	
 	public int retirar(String placa, int dia, int mes, int ano, int hora, int minuto, int segundo){
-		int i =verificaPlaca(placa, total);
-		if(i!=-1)
+		int k =verificaPlaca(placa, total);
+		int i = -1, c=0,cm=0,m=0;
+		if(k!=-1)
 		{
-			
-			if(i<20)
+			if(k<20)
 				{
 				motos--;
-				veiculos.get(i).setPreco(valmoto);
+				veiculos.get(k).setPreco(valmoto);
+				m=1;
 				}
 			else {
-				if(i<40)
+				if(k<40)
 				{
 					caminhonetes--;
-					veiculos.get(i).setPreco(valcaminhonete);
+					veiculos.get(k).setPreco(valcaminhonete);
+					cm=1;
 					}
 				else
 				{
 					carros--;
-					veiculos.get(i).setPreco(valcarro);
+					veiculos.get(k).setPreco(valcarro);
+					c=1;
 					}
 			}
 			total--;
 			totalConcluido++;
 			maior(dia,mes,ano);
-			veiculos.get(i).retirarVeiculo(dia, mes, hora, segundo, ano, minuto);
-			historico.add(new Veiculo(veiculos.get(i)));
+			i = veiculos.get(k).retirarVeiculo(dia, mes, hora, segundo, ano, minuto, k);
+			if(i!=-2)
+			{historico.add(new Veiculo(veiculos.get(i)));
+			total--;
+			totalConcluido++;
+			}
+			else
+			{
+				if(c==1)
+					carros++;
+				else
+				{
+					if(m==1)
+						motos++;
+					else
+						caminhonetes++;
+				}
+				total++;
+				totalConcluido--;
+			}
 		}
 		escrever();
 		return i;

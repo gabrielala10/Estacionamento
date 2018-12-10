@@ -166,6 +166,52 @@ public class Avisos {
 		  });
 	}
 	
+	public void telaDataInvalida(Control controle)
+	{
+		JFrame janelaa = new JFrame("ERRO!");
+	    janelaa.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	    JButton botao = new JButton("OK");
+	    
+	    janelaa.setSize(400, 250);
+	    janelaa.setLocationRelativeTo(null);
+	    janelaa.setVisible(true);
+	    
+	    JPanel text1 = new JPanel();
+		JPanel text3 = new JPanel();
+		JPanel bott = new JPanel();
+		
+		bott.setLocation(150,150);
+		
+		text1.setLocation(5,50);
+		text3.setLocation(150,20);
+		
+		text1.setSize(400, 150);
+		text3.setSize(100, 40);
+		
+		bott.setSize(100, 40);
+	    
+	    JLabel vagaEsta = new JLabel("DATA INVÁLIDA!");
+	    vagaEsta.setFont(new Font("Dialog", Font.PLAIN, 35));
+	    JLabel dados = new JLabel("Mensagem de erro:");
+	    
+	    text1.add(vagaEsta);
+		text3.add(dados);
+		bott.add(botao);
+		
+		
+		  janelaa.add(text1);
+		  janelaa.add(bott);
+		  janelaa.add(text3);
+		  
+		  botao.addActionListener(new ActionListener() {
+			  public void actionPerformed(ActionEvent e){			  
+				  janelaa.dispose();
+				  TelaPrincipal t = new TelaPrincipal();
+				  t.plantaBaixa(controle);
+			  }
+		  });
+	}
+	
 	public void telaSemEspaco(Control controle)
 	{
 		JFrame janelaa = new JFrame("NÃO HÁ VAGAS!");

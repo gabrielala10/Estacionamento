@@ -309,10 +309,15 @@ public class TelaEstacionar{
 		  		int hora = Integer.parseInt((String) horaa.getSelectedItem().toString());
 		  		int minutos = Integer.parseInt((String) minuto.getSelectedItem().toString());
 		  		int segundo = Integer.parseInt((String) segundos.getSelectedItem().toString());
-		  		int i =controle.retirar(placaa, diaa, mess, anoo, hora, minutos, segundo);
+		  		int i = controle.retirar(placaa, diaa, mess, anoo, hora, minutos, segundo);
 				  janela.dispose();
 				  if(i!=-1)
-				  telVal.telaEncerra(controle.veiculos.get(i), i, controle);
+				  {
+					  if(i==-2)
+						  telinha.telaDataInvalida(controle);
+					  else
+					  telVal.telaEncerra(controle.veiculos.get(i), i, controle);
+				  }
 				  else
 					  telinha.telaPlacaNot(controle);
 			  }
